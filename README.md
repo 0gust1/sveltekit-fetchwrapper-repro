@@ -8,16 +8,21 @@
 
 To facilitate error management and avoid error management boilerplates on fetch requests, we use a small wrapper around the native `fetch` function.
 
-example code in [src/lib/utils/fetchwrapper.ts](src/lib/utils/fetchwrapper.ts)
+example code in [src/lib/utils/fetchwrapper.ts](src/lib/utils/fetchWrapper.ts)
 
 This wrapper can take a fetchlib instance parameter, in order to handle the sveltekit's special `fetch`
 
 However, when using this wrapper in a `+page.server.ts` file:
 
 - a fetch to an external API works.
-- a fetch to an internal endpoint ( /api/example-123 here ) breaks.
+- a fetch to an internal endpoint ( `/api/example-123` here ) breaks.
+
+## Questions: 
+- is there a way to make this wrapper work with internal endpoints?
+- I guess the problem is [that Sveltekit captures the request and tries to handle it](https://kit.svelte.dev/docs/load#making-fetch-requests), but I don't know how to make it work.
 
 When it break, we get the following stacktrace:
+
 ```
 TypeError: Failed to parse URL from /api/example-123
 at new Request (PROJECT_PATH/node_modules/undici/lib/fetch/request.js:87:15)
